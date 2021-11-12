@@ -3,8 +3,11 @@ from tkinter.ttk import *
 sc=0;mn=0;hr=0;stp=False
 window =Tk()
 def start():
-    global sc,mn,hr
+    global sc,mn,hr,stp
+    stp=False
     button1['state']=DISABLED
+    Button2['state']=NORMAL
+    Button3['state']=NORMAL
     sc=0
     mn=0
     hr=0
@@ -28,27 +31,32 @@ def stopRes():
     global stp
     if(stp==False):
         stp=True
-        B['text']='Resume'
+        Button2['text']='Resume'
     elif(stp==True):
         stp=False
-        B['text'] = 'Stop'
+        Button2['text'] = 'Stop'
         count()
 def reset():
-    global sc, mn, hr
-    stopRes()
+    global sc, mn, hr, stp
+    stp=True
+    button1['state']=NORMAL
+    Button2['state']=DISABLED
+    Button2['text']="Stop"
+    Button3['state']=DISABLED
     sc=0
     mn=0
     hr=0
     lbl['text'] = '%02d:%02d:%02d' % (hr, mn, sc)
 
-window.config(bg="DeepSkyBlue4")
-lbl = Label(window,text = '%02d:%02d:%02d' % (hr, mn, sc), font=('OCR A Extended', 30, 'bold'), foreground="blue")
+window.config(bg="gray24")
+lbl = Label(window,text = '%02d:%02d:%02d' % (hr, mn, sc), font=('OCR A Extended', 30, 'bold'), foreground="black")
 lbl.place(x=40, y=60)
 button1=Button(window,text="Start",command=start)
 button1.place(x=10,y=10)
-B=Button(window, text = 'Stop' ,command=stopRes)
-B.place(x=100,y=10)
+Button2=Button(window, text = 'Stop' ,state = DISABLED,command=stopRes)
+Button2.place(x=100,y=10)
 window.title("Stopwatch")
 window.geometry("280x150")
-Button3=Button(window,text="Reset",command=reset).place(x=190, y=10)
+Button3=Button(window,text="Reset",state = DISABLED,command=reset)
+Button3.place(x=190, y=10)
 window.mainloop()
